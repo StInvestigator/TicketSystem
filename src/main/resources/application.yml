@@ -1,0 +1,35 @@
+spring:
+#  jpa:
+#    open-in-view: true
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+  application:
+    name: TickersSystem
+  datasource:
+    url: jdbc:postgresql://localhost:5437/tickets
+    username: sa
+    password: admin
+    driverClassName: org.postgresql.Driver
+
+
+  flyway:
+    enabled: true
+    user: sa
+    password: admin
+    schemas: public
+    url: jdbc:postgresql://localhost:5437/tickets
+
+#logging:
+#  level:
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+data:
+  names: src/main/resources/names.txt
+  emails: src/main/resources/emails.txt
+  phone_numbers: src/main/resources/phone_numbers.txt
+  eventNames: src/main/resources/eventNames.txt
+  places: src/main/resources/places.txt
