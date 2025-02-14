@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Events</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<style>
+    .col-md-3 {
+        flex-basis: 33%;
+        max-width: 33%;
+    }
+
+    span {
+        color: darkred;
+    }
+</style>
+
+<body>
+<th:block th:include="/menu"></th:block>
+
+<div class="row mx-4">
+    <h1 th:if="${events.size()==0}">There is no events in next 2 weeks</h1>
+    <form class="col-md-3" th:each="event : ${events}" method="POST" th:action="@{/tickets/buy}">
+        <div class="card mb-2">
+            <div class="card-body text-center" style="height: 240px">
+                <h5 class="card-title" style="height: 30px" th:text="${event.name}">...</h5>
+                <p class="my-0" th:text="'Place: ' + ${event.place.name}">...</p>
+                <p class="my-0" th:text="'Address: ' + ${event.place.address}">...</p>
+                <div class="badge bg-success text-white my-2" style="margin: 0 auto; display:block; width: 80px"
+                     th:text="${event.date.getDate() + '.' + (event.date.getMonth()+1) + '.' + (event.date.getYear()+1900)}">...
+                </div>
+                <label th:if="${event.isFreeTicketsLeft()}"> Ticket:
+                    <select style="height: 24px; max-width: 200px" name="ticketId">
+                        <option th:each="ticket : ${event.tickets}"
+                                th:if="${ticket.status.name == 'FREE'}"
+                                th:value="${ticket.id}"
+                                th:text="${ticket.number + ' - ' + ticket.cost + '$'}">
+                            ...
+                        </option>
+                    </select>
+                </label>
+                <div th:unless="${event.isFreeTicketsLeft()}" style="height: 24px"></div>
+                <button th:if="${event.isFreeTicketsLeft()}" class="btn btn-outline-primary p-1" type="submit"
+                        style="width:90%">Buy
+                </button>
+                <button th:unless="${event.isFreeTicketsLeft()}" class="btn btn-outline-danger p1" type="button" disabled
+                        style="width:90%">Sold out
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

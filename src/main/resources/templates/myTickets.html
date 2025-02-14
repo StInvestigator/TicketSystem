@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ongoing trips</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<style>
+    .col-md-3 {
+        flex-basis: 33%;
+        max-width: 33%;
+    }
+</style>
+
+<body>
+<th:block th:include="/menu"></th:block>
+
+<div class="row mx-4">
+    <h1 th:if="${tickets.size()==0}">You have no tickets</h1>
+    <div class="col-md-3" th:each="ticket : ${tickets}">
+        <div class="card mb-2">
+            <div class="card-body text-center">
+                <h5 class="card-title" style="height: 30px" th:text="${ticket.event.name}">...</h5>
+                <p class="my-0" th:text="'Place: ' + ${ticket.event.place.name}">...</p>
+                <p class="my-0" th:text="'Address: ' + ${ticket.event.place.address}">...</p>
+                <p class="my-0" th:text="'Ticket number: ' + ${ticket.number}">...</p>
+                <div class="badge bg-success text-white my-2" style="margin: 0 auto; display:block; width: 80px"
+                     th:text="${ticket.event.date.getDate() + '.' + (ticket.event.date.getMonth()+1) + '.' + (ticket.event.date.getYear()+1900)}">...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
