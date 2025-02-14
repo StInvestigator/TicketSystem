@@ -56,4 +56,9 @@ public class PlaceServiceImpl implements PlaceService {
     public Place findByAddress(String address) {
         return placeRepository.findByAddressLikeIgnoreCase(address);
     }
+
+    @Override
+    public Place findById(Long id) {
+        return placeRepository.findById(id).orElse(null);
+    }
 }

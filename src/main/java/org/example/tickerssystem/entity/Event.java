@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -30,4 +31,13 @@ public class Event {
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
     private List<Ticket> tickets;
+
+    public boolean isFreeTicketsLeft(){
+        for(Ticket ticket : tickets){
+            if(Objects.equals(ticket.getStatus().getName(), "FREE")){
+                return true;
+            }
+        }
+        return false;
+    }
 }

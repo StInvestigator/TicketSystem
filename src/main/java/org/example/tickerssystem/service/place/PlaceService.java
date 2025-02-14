@@ -11,4 +11,5 @@ public interface PlaceService {
     List<Place> findAll();
     void deleteAll();
     Place findByAddress(String address);
+    Place findById(Long id);
 }

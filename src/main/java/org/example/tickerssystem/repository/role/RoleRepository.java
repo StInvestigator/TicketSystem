@@ -1,11 +1,12 @@
-package org.example.tickerssystem.repository.customer;
+package org.example.tickerssystem.repository.role;
 
-import org.example.tickerssystem.entity.Customer;
+import org.example.tickerssystem.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
+
 }

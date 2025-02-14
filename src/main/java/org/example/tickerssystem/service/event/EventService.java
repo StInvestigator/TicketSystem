@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface EventService {
     void save(Event event);
+    boolean save(EventCreationDTO event);
     void saveAll(List<EventCreationDTO> events);
     List<Event> findAll();
     List<Event> findClosestEventsIn2Weeks();

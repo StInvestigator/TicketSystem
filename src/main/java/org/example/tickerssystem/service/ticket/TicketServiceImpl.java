@@ -1,6 +1,6 @@
 package org.example.tickerssystem.service.ticket;
 
-import org.example.tickerssystem.entity.Customer;
+import org.example.tickerssystem.entity.AppUser;
 import org.example.tickerssystem.entity.Event;
 import org.example.tickerssystem.entity.Ticket;
 import org.example.tickerssystem.repository.ticketStatus.TicketStatusRepository;
@@ -39,6 +39,9 @@ public class TicketServiceImpl implements TicketService {
         if (event.getTickets() != null) number = event.getTickets()
                 .stream().max(Comparator.comparingInt(Ticket::getNumber))
                 .map(Ticket::getNumber).orElse(0);
+        else{
+            event.setTickets(new ArrayList<>());
+        }
         for (int i = 1; i <= ticketPack.getCount(); i++) {
             Ticket ticket = new Ticket();
             ticket.setCost(ticketPack.getCost());
@@ -47,6 +50,7 @@ public class TicketServiceImpl implements TicketService {
             ticket.setNumber(number + i);
 
             tickets.add(ticket);
+            event.getTickets().add(ticket);
         }
         ticketRepository.saveAll(tickets);
     }
@@ -63,7 +67,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional
-    public void sellTicket(Ticket ticket, Customer customer) {
+    public void sellTicket(Ticket ticket, AppUser customer) {
         ticket.setCustomer(customer);
         ticket.setStatus(statusRepository.findByNameIgnoreCase("SOLD"));
         customer.getTickets().add(ticket);
@@ -74,5 +78,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void deleteAll() {
         ticketRepository.deleteAll();
+    }
+
+    @Override
+    public Ticket findById(Long id) {
+        return ticketRepository.findById(id).orElse(null);
     }
 }

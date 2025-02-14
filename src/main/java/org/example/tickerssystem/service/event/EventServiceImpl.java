@@ -39,6 +39,25 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public boolean save(EventCreationDTO event) {
+        Event eventEntity = new Event();
+        eventEntity.setDate(event.getDate());
+        eventEntity.setName(event.getName());
+
+        if (!isPlaceFree(event.getPlace(), event.getDate())) {
+            return false;
+        }
+        eventEntity.setPlace(event.getPlace());
+
+        eventRepository.save(eventEntity);
+
+        for (TicketPackDTO ticketPackDTO : event.getTicketPacks()) {
+            ticketService.saveAll(ticketPackDTO, eventEntity);
+        }
+        return true;
+    }
+
+    @Override
     public void saveAll(List<EventCreationDTO> events) {
         for (EventCreationDTO event : events) {
             if (event == null || event.getTicketPacks().isEmpty()) {
@@ -56,7 +75,7 @@ public class EventServiceImpl implements EventService {
                 placeService.save(placeEntity);
             } else if (!isPlaceFree(placeEntity, event.getDate())) {
                 System.out.println(event.getPlace().getName() + " is already taken by another event at the " + event.getDate());
-                return;
+                continue;
             }
             eventEntity.setPlace(placeEntity);
 
