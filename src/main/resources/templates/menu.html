@@ -1,0 +1,25 @@
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item mx-1" th:if="${#request.isUserInRole('ROLE_ADMIN')}">
+                        <a class="nav-link text-dark" th:href="@{/events/add}">Add event</a>
+                    </li>
+                    <li class="nav-item mx-1" th:if="${#request.isUserInRole('ROLE_USER')}">
+                        <a class="nav-link text-dark" th:href="@{/events}">Show events</a>
+                    </li>
+                    <li class="nav-item mx-1" th:if="${#request.isUserInRole('ROLE_USER')}">
+                        <a class="nav-link" style="color: darkgreen" th:href="@{/tickets/my}">My tickets</a>
+                    </li>
+                    <li class="nav-item mx-1" th:if="${#request.userPrincipal != null}">
+                        <a class="nav-link" style="color: darkred" th:href="@{/logout}">Logout</a>
+                    </li>
+                    <li class="nav-item mx-1" th:if="${#request.userPrincipal == null}">
+                        <a class="nav-link text-dark" th:href="@{/login}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
